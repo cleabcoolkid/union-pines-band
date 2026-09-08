@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Union Pines Band Countdown</title>
+
+<style>
+
+:root {
+  --blue: #90D5FF;
+  --blue-dark: #45AEEA;
+  --white: #ffffff;
+  --black: #111111;
+  --gray: #6d7480;
+  --background: #90D5FF;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--black);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark {
+  --background: #101418;
+  --card: #1c2228;
+  --black: #ffffff;
+  --gray: #aab2bb;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 25px 18px 50px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  text-align: center;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.logo {
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+h1 {
+  font-size: clamp(38px, 8vw, 72px);
+  line-height: 0.95;
+  margin: 8px 0;
+  font-weight: 900;
+  letter-spacing: -3px;
+}
+
+.subtitle {
+  font-size: 17px;
+  opacity: 0.9;
+}
+
+/* =========================
+   NEXT UP
+========================= */
+
+.next {
+  background: var(--card);
+  border-radius: 28px;
+  padding: 35px 20px;
+  text-align: center;
+
+  box-shadow:
+    0 12px 0 rgba(0,0,0,0.12),
+    0 20px 50px rgba(0,0,0,0.12);
+
+  margin-bottom: 25px;
+
+  animation: appear 0.7s ease;
+}
+
+.next-label {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--blue-dark);
+  text-transform: uppercase;
+}
+
+.next-icon {
+  font-size: 55px;
+  margin: 10px 0;
+}
+
+.next-name {
+  font-size: clamp(28px, 7vw, 48px);
+  font-weight: 900;
+  margin: 5px 0;
+}
+
+.next-date {
+  color: var(--gray);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.big-countdown {
+  font-size: clamp(35px, 9vw, 70px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.until {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* =========================
+   EVENT CARDS
+========================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 22px;
+  padding: 25px;
+
+  box-shadow: 0 8px 0 rgba(0,0,0,0.10);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  animation: appear 0.7s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 0 rgba(0,0,0,0.10);
+}
+
+.card-icon {
+  font-size: 38px;
+}
+
+.card-type {
+  font-size: 12px;
+  color: var(--gray);
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.card-name {
+  font-size: 25px;
+  font-weight: 900;
+  margin: 5px 0;
+}
+
+.card-date {
+  color: var(--gray);
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.card-countdown {
+  font-size: 23px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.card-days {
+  color: var(--gray);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* =========================
+   SEASON PROGRESS
+========================= */
+
+.progress-box {
+  margin-top: 22px;
+  background: var(--card);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 8px 0 rgba(0,0,0,0.10);
+}
+
+.progress-title {
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.progress-text {
+  color: var(--gray);
+  font-size: 13px;
+  margin: 5px 0 12px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  background: rgba(0,0,0,0.12);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--blue-dark);
+  border-radius: 100px;
+  transition: width 1s ease;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.toggle {
+  margin-top: 15px;
+  border: none;
+  background: rgba(255,255,255,0.25);
+  color: white;
+  padding: 10px 17px;
+  border-radius: 100px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pulse {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* =========================
+   PHONE
+========================= */
+
+@media (max-width: 650px) {
+
+  .container {
+    padding: 20px 12px 35px;
+  }
+
+  h1 {
+    letter-spacing: -2px;
+  }
+
+  .next {
+    padding: 28px 15px;
+    border-radius: 23px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    padding: 21px;
+    border-radius: 19px;
+  }
+
+  .card-countdown {
+    font-size: 25px;
+  }
+
+  .big-countdown {
+    letter-spacing: -1px;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+
+  <div class="header">
+
+    <div class="logo">
+      Union Pines Marching Band
+    </div>
+
+    <h1>
+      WHAT'S NEXT?
+    </h1>
+
+    <div class="subtitle">
+      2026 Band Season
+    </div>
+
+  </div>
+
+
+  <!-- NEXT EVENT -->
+
+  <div class="next">
+
+    <div class="next-label">
+      ★ NEXT UP ★
+    </div>
+
+    <div class="next-icon" id="nextIcon">
+      🎺
+    </div>
+
+    <div class="next-name" id="nextName">
+      Loading...
+    </div>
+
+    <div class="next-date" id="nextDate">
+    </div>
+
+    <div class="big-countdown" id="nextCountdown">
+    </div>
+
+    <div class="until">
+      until it starts
+    </div>
+
+  </div>
+
+
+  <!-- CATEGORY CARDS -->
+
+  <div class="cards">
+
+    <div class="card">
+
+      <div class="card-icon">
+        🏈
+      </div>
+
+      <div class="card-type">
+        Next Game
+      </div>
+
+      <div class="card-name" id="gameName">
+        Loading...
+      </div>
+
+      <div class="card-date" id="gameDate">
+      </div>
+
+      <div class="card-countdown" id="gameCountdown">
+      </div>
+
+      <div class="card-days" id="gameDays">
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        🥁
+      </div>
+
+      <div class="card-type">
+        Next Competition
+      </div>
+
+      <div class="card-name" id="compName">
+        Loading...
+      </div>
+
+      <div class="card-date" id="compDate">
+      </div>
+
+      <div class="card-countdown" id="compCountdown">
+      </div>
+
+      <div class="card-days" id="compDays">
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        🎺
+      </div>
+
+      <div class="card-type">
+        Next Practice
+      </div>
+
+      <div class="card-name" id="practiceName">
+        Loading...
+      </div>
+
+      <div class="card-date" id="practiceDate">
+      </div>
+
+      <div class="card-countdown" id="practiceCountdown">
+      </div>
+
+      <div class="card-days" id="practiceDays">
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-icon">
+        🎉
+      </div>
+
+      <div class="card-type">
+        Next Parade
+      </div>
+
+      <div class="card-name" id="paradeName">
+        Loading...
+      </div>
+
+      <div class="card-date" id="paradeDate">
+      </div>
+
+      <div class="card-countdown" id="paradeCountdown">
+      </div>
+
+      <div class="card-days" id="paradeDays">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SEASON PROGRESS -->
+
+  <div class="progress-box">
+
+    <div class="progress-title">
+      🏁 2026 Season Progress
+    </div>
+
+    <div class="progress-text" id="progressText">
+      Loading...
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <div class="footer">
+
+    Union Pines Marching Band • 2026
+
+    <br>
+
+    <button class="toggle" onclick="toggleDark()">
+      🌙 Toggle dark mode
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   ALL BAND EVENTS
+========================= */
+
+const events = {
+
+  games: [
+    "2026-09-18",
+    "2026-09-25",
+    "2026-10-09",
+    "2026-10-23"
+  ],
+
+  comps: [
+    "2026-09-26",
+    "2026-10-03",
+    "2026-10-17",
+    "2026-10-24",
+    "2026-10-31"
+  ],
+
+  practices: [
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-26",
+    "2026-10-27",
+    "2026-11-02",
+    "2026-11-03"
+  ],
+
+  parades: [
+    "2026-11-07",
+    "2026-12-05"
+  ]
+
+};
+
+
+/* =========================
+   SPECIAL NAMES
+========================= */
+
+const specialNames = {
+
+  "2026-10-24": "VIKING CLASSIC"
+
+};
+
+
+/* =========================
+   CATEGORY INFO
+========================= */
+
+const categoryInfo = {
+
+  game: {
+    name: "Football Game",
+    icon: "🏈"
+  },
+
+  comp: {
+    name: "Marching Competition",
+    icon: "🥁"
+  },
+
+  practice: {
+    name: "Band Practice",
+    icon: "🎺"
+  },
+
+  parade: {
+    name: "Parade",
+    icon: "🎉"
+  }
+
+};
+
+
+/* =========================
+   FIND NEXT EVENT
+========================= */
+
+function getNext(list) {
+
+  const now = new Date();
+
+  for (let date of list) {
+
+    const event = new Date(date + "T12:00:00");
+
+    if (event > now) {
+      return event;
+    }
+
+  }
+
+  return null;
+
+}
+
+
+/* =========================
+   FORMAT DATE
+========================= */
+
+function formatDate(date) {
+
+  return date.toLocaleDateString("en-US", {
+
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+
+  });
+
+}
+
+
+/* =========================
+   COUNTDOWN TEXT
+========================= */
+
+function getCountdown(date) {
+
+  let difference = date - new Date();
+
+  if (difference < 0) {
+    difference = 0;
+  }
+
+  const days =
+    Math.floor(difference / 86400000);
+
+  const hours =
+    Math.floor((difference / 3600000) % 24);
+
+  const minutes =
+    Math.floor((difference / 60000) % 60);
+
+  const seconds =
+    Math.floor((difference / 1000) % 60);
+
+
+  return {
+
+    days,
+    hours,
+    minutes,
+    seconds
+
+  };
+
+}
+
+
+/* =========================
+   COUNTDOWN STRING
+========================= */
+
+function countdownString(time) {
+
+  return (
+
+    String(time.days).padStart(2,"0") + "d " +
+
+    String(time.hours).padStart(2,"0") + "h " +
+
+    String(time.minutes).padStart(2,"0") + "m " +
+
+    String(time.seconds).padStart(2,"0") + "s"
+
+  );
+
+}
+
+
+/* =========================
+   GET EVENT NAME
+========================= */
+
+function getName(type, date) {
+
+  const key =
+    date.toISOString().split("T")[0];
+
+  if (specialNames[key]) {
+    return specialNames[key];
+  }
+
+  return categoryInfo[type].name;
+
+}
+
+
+/* =========================
+   UPDATE CARD
+========================= */
+
+function updateCard(
+  type,
+  list,
+  nameId,
+  dateId,
+  countdownId,
+  daysId
+) {
+
+  const event = getNext(list);
+
+  const name =
+    document.getElementById(nameId);
+
+  const date =
+    document.getElementById(dateId);
+
+  const countdown =
+    document.getElementById(countdownId);
+
+  const days =
+    document.getElementById(daysId);
+
+
+  if (!event) {
+
+    name.textContent = "Season complete";
+    date.textContent = "";
+    countdown.textContent = "🎉";
+    days.textContent = "";
+
+    return null;
+
+  }
+
+
+  name.textContent =
+    getName(type, event);
+
+  date.textContent =
+    formatDate(event);
+
+
+  const time =
+    getCountdown(event);
+
+  countdown.textContent =
+    countdownString(time);
+
+
+  if (time.days === 0) {
+
+    days.textContent = "🔥 TODAY";
+
+  }
+
+  else if (time.days === 1) {
+
+    days.textContent = "1 day to go";
+
+  }
+
+  else {
+
+    days.textContent =
+      time.days + " days to go";
+
+  }
+
+
+  return event;
+
+}
+
+
+/* =========================
+   UPDATE EVERYTHING
+========================= */
+
+function update() {
+
+  const game =
+    updateCard(
+      "game",
+      events.games,
+      "gameName",
+      "gameDate",
+      "gameCountdown",
+      "gameDays"
+    );
+
+
+  const comp =
+    updateCard(
+      "comp",
+      events.comps,
+      "compName",
+      "compDate",
+      "compCountdown",
+      "compDays"
+    );
+
+
+  const practice =
+    updateCard(
+      "practice",
+      events.practices,
+      "practiceName",
+      "practiceDate",
+      "practiceCountdown",
+      "practiceDays"
+    );
+
+
+  const parade =
+    updateCard(
+      "parade",
+      events.parades,
+      "paradeName",
+      "paradeDate",
+      "paradeCountdown",
+      "paradeDays"
+    );
+
+
+  /* =========================
+     FIND OVERALL NEXT EVENT
+  ========================= */
+
+  const all = [
+
+    {
+      type: "game",
+      date: game
+    },
+
+    {
+      type: "comp",
+      date: comp
+    },
+
+    {
+      type: "practice",
+      date: practice
+    },
+
+    {
+      type: "parade",
+      date: parade
+    }
+
+  ].filter(x => x.date !== null);
+
+
+  all.sort((a,b) =>
+    a.date - b.date
+  );
+
+
+  if (all.length > 0) {
+
+    const next = all[0];
+
+    const info =
+      categoryInfo[next.type];
+
+    document.getElementById(
+      "nextIcon"
+    ).textContent = info.icon;
+
+
+    document.getElementById(
+      "nextName"
+    ).textContent =
+      getName(next.type, next.date);
+
+
+    document.getElementById(
+      "nextDate"
+    ).textContent =
+      formatDate(next.date);
+
+
+    const time =
+      getCountdown(next.date);
+
+
+    document.getElementById(
+      "nextCountdown"
+    ).textContent =
+      countdownString(time);
+
+  }
+
+
+  /* =========================
+     SEASON PROGRESS
+  ========================= */
+
+  const seasonStart =
+    new Date("2026-09-08T00:00:00");
+
+  const seasonEnd =
+    new Date("2026-12-05T23:59:59");
+
+  const now =
+    new Date();
+
+  let progress =
+    ((now - seasonStart) /
+    (seasonEnd - seasonStart)) * 100;
+
+
+  progress =
+    Math.max(0, Math.min(100, progress));
+
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    progress + "%";
+
+
+  document.getElementById(
+    "progressText"
+  ).textContent =
+    Math.round(progress) +
+    "% of the season";
+
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleDark() {
+
+  document.body.classList.toggle("dark");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+update();
+
+setInterval(update, 1000);
+
+</script>
+
+</body>
+</html>
